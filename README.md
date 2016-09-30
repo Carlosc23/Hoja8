@@ -1,2 +1,2 @@
 # Hoja8
-https://github.com/Carlosc23/Hoja8.git
+Repositorio correspondiente a la hoja de trabajo No. 8 sobre Priority Queue del curso de Algoritmos y estructuras de datos.
