@@ -1,11 +1,8 @@
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JMenuBar;
 import javax.swing.JLabel;
-import javax.swing.SwingConstants;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import java.awt.Font;
@@ -14,19 +11,30 @@ import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
 import javax.swing.JButton;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import java.awt.event.ActionListener;
+import java.util.Vector;
+import java.awt.event.ActionEvent;
 
 /**
  * @author Carlos Calderon ,15219
  * @author 
- * @version 1.1
+ * @version 2.0 , 1 de octubre de 2016
+ * Clase GUIHospital. Se encarga de dar la interfaz grafica, para desplegar a los pacientes.
  */
 public class GUIHospital extends JFrame {
-
+	/*Atributos*/
 	private JPanel contentPane;
 	private JTextField textField;
+	private JButton  btnDesplegar,btnNewButton ;
+	private Manejadora manejadora;
+	private JLabel lblNewLabel,lblNewLabel_1,lblPacientesEnOrden;
+	private JTextArea textArea;
+	private GroupLayout gl_contentPane;
+	private JScrollPane scrollPane;
 
 	/**
 	 * Launch the application.
+	 * @param args
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -40,72 +48,125 @@ public class GUIHospital extends JFrame {
 			}
 		});
 	}
-
 	/**
-	 * Create the frame.
+	 * Constructor. Incializa componentes graficos e instancia la clase manejadora.
 	 */
 	public GUIHospital() {
+		manejadora = new Manejadora();
+		initialize();
+	}
+	
+	/**
+	 * Crear el frame
+	 */
+	private void initialize(){
+		//Inicializar panel
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 741, 486);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		
-		JLabel lblNewLabel = new JLabel("Registro de Emergencias UVG");
+		//Inicializar labels
+		lblNewLabel = new JLabel("Registro de Emergencias UVG");
 		lblNewLabel.setFont(new Font("Tw Cen MT", Font.PLAIN, 18));
+		lblNewLabel_1 = new JLabel("Ingrese directorio de  fichas del paciente:");
+		lblPacientesEnOrden = new JLabel("Pacientes registrados/ Pacientes en orden de prioridad");
 		
-		JLabel lblNewLabel_1 = new JLabel("Ingrese directorio de  fichas del paciente:");
-		
+		//Inicializar textfield
 		textField = new JTextField();
 		textField.setColumns(10);
 		
-		JScrollPane scrollPane = new JScrollPane();
+		//Inicizliar textArea
+		textArea = new JTextArea();		
+
+		//Inicializar botones 
+		btnDesplegar = new JButton("Desplegar");
+		btnNewButton = new JButton("Reiniciar");
 		
-		JButton btnDesplegar = new JButton("Desplegar");
+		//Inicializar Scrollpanel
+		scrollPane = new JScrollPane();
 		
-		JLabel lblPacientesEnOrden = new JLabel("Pacientes en orden de prioridad");
-		GroupLayout gl_contentPane = new GroupLayout(contentPane);
-		gl_contentPane.setHorizontalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGap(205)
-							.addComponent(lblNewLabel))
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGap(45)
-							.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 515, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(btnDesplegar))
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addContainerGap()
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-								.addComponent(lblPacientesEnOrden)
-								.addComponent(lblNewLabel_1))
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(textField, GroupLayout.DEFAULT_SIZE, 478, Short.MAX_VALUE)))
-					.addContainerGap())
-		);
-		gl_contentPane.setVerticalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGap(23)
-					.addComponent(lblNewLabel)
-					.addGap(43)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblNewLabel_1)
-						.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(18)
-					.addComponent(lblPacientesEnOrden)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-						.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 229, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnDesplegar))
-					.addContainerGap(47, Short.MAX_VALUE))
-		);
+		// Agregar listeners
+		 btnDesplegar.addActionListener(new ManejadorEventos());
+		 btnNewButton.addActionListener(new ManejadorEventos());
 		
-		JTextArea textArea = new JTextArea();
+		 //Inicializar layout y agregar componentes en sus respectivas posiciones
+		 gl_contentPane = new GroupLayout(contentPane);
+		 gl_contentPane.setHorizontalGroup(
+		 	gl_contentPane.createParallelGroup(Alignment.LEADING)
+		 		.addGroup(gl_contentPane.createSequentialGroup()
+		 			.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+		 				.addGroup(gl_contentPane.createSequentialGroup()
+		 					.addGap(205)
+		 					.addComponent(lblNewLabel))
+		 				.addGroup(gl_contentPane.createSequentialGroup()
+		 					.addGap(73)
+		 					.addComponent(lblNewLabel_1)
+		 					.addPreferredGap(ComponentPlacement.UNRELATED)
+		 					.addComponent(textField, GroupLayout.DEFAULT_SIZE, 486, Short.MAX_VALUE))
+		 				.addGroup(gl_contentPane.createSequentialGroup()
+		 					.addGap(45)
+		 					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 515, GroupLayout.PREFERRED_SIZE)
+		 					.addPreferredGap(ComponentPlacement.UNRELATED)
+		 					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING, false)
+		 						.addComponent(btnNewButton, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+		 						.addComponent(btnDesplegar, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+		 				.addGroup(gl_contentPane.createSequentialGroup()
+		 					.addGap(36)
+		 					.addComponent(lblPacientesEnOrden)))
+		 			.addContainerGap())
+		 );
+		 gl_contentPane.setVerticalGroup(
+		 	gl_contentPane.createParallelGroup(Alignment.LEADING)
+		 		.addGroup(gl_contentPane.createSequentialGroup()
+		 			.addGap(23)
+		 			.addComponent(lblNewLabel)
+		 			.addGap(43)
+		 			.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+		 				.addComponent(lblNewLabel_1)
+		 				.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+		 			.addGap(18)
+		 			.addComponent(lblPacientesEnOrden)
+		 			.addPreferredGap(ComponentPlacement.RELATED)
+		 			.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+		 				.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 229, GroupLayout.PREFERRED_SIZE)
+		 				.addComponent(btnDesplegar))
+		 			.addPreferredGap(ComponentPlacement.RELATED)
+		 			.addComponent(btnNewButton)
+		 			.addContainerGap(34, Short.MAX_VALUE))
+		 );
+		
 		scrollPane.setViewportView(textArea);
 		contentPane.setLayout(gl_contentPane);
 	}
+	//Inner class para manejar eventos
+		private class ManejadorEventos implements ActionListener {
+			/* (non-Javadoc)
+			 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+			 */
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				/*Boton de reinicio*/
+				if (e.getSource() == btnNewButton) {
+					textField.setEditable(true);
+					textArea.setText("");
+					textField.setText("");
+				}
+				/* Boton para desplegar resultados*/
+				if (e.getSource() == btnDesplegar) {
+					String contenido=manejadora.leerContenido(textField.getText());
+					if (contenido!=null){
+						textArea.append("--Pacientes en orden de registro-- \n");
+						textArea.append(contenido);
+						manejadora.asignacion(textField.getText());
+						textArea.append("--Pacientes en orden de prioridad que deben ser atendidos-- \n");
+						//C:\Users\Carlos\Desktop\nombres.txt"
+						textArea.append(manejadora.desplegar());
+						textField.setEditable(false);
+					}
+					
+				}
+			}
+		}
 }

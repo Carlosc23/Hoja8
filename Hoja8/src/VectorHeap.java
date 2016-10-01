@@ -1,56 +1,64 @@
 import java.util.Vector;
 /**
  * @author UVG
- * @Version 1.1
- * 
- *
+ * @version 2.0, 1 de octubre de 2016
+ * @param <E> Para indicar el tipo de objeto que almacenara la cola.
  */
 public class VectorHeap<E extends Comparable<E>> implements PriorityQueue<E>
 {
-
+	/* Atributos*/
 	protected Vector<E> data; // the data, kept in heap order
 
-	public VectorHeap()
-	// post: constructs a new priority queue
-	{
+	
+	/**
+	 * Contructor para inicializar la cola prioritaria.
+	 */
+	public VectorHeap(){
 		data = new Vector<E>();
 	}
-
+	
+	/**
+	 * @param v vector de tipo E 
+	 *  Constrctor para construir una cola prioritaria, recibiendo la cola en desorden.
+	 */
 	public VectorHeap(Vector<E> v)
-	// post: constructs a new priority queue from an unordered vector
 	{
 		int i;
-		data = new Vector<E>(v.size()); // we know ultimate size
-		for (i = 0; i < v.size(); i++)
-		{ // add elements to heap
-			add(v.get(i));
+		data = new Vector<E>(v.size()); // Obtener tamano del vector
+		for (i = 0; i < v.size(); i++){ 
+			add(v.get(i)); //Agregar elementos al heap
 		}
 	}
-	protected static int parent(int i)
-	// pre: 0 <= i < size
-	// post: returns parent of node at location i
-	{
+	
+	/**
+	 * @param i posicion del nodo 
+	 * @return el padre del nodo en la posicion i
+	 */
+	protected static int parent(int i){
 		return (i-1)/2;
 	}
 
-	protected static int left(int i)
-	// pre: 0 <= i < size
-	// post: returns index of left child of node at location i
-	{
+	/**
+	 * @param i posicion del nodo 
+	 * @return posicion del hijo izquierdo del nodo en la posicion i
+	 */
+	protected static int left(int i){
 		return 2*i+1;
 	}
-
-	protected static int right(int i)
-	// pre: 0 <= i < size
-	// post: returns index of right child of node at location i
-	{
+	/**
+	 * @param i posicion del nodo 
+	 * @return posicion del hijo derecho del nodo en la posicion i
+	 */
+	protected static int right(int i){
 		return (2*i+1) + 1;
 	}
 
-	protected void percolateUp(int leaf)
-	// pre: 0 <= leaf < size
-	// post: moves node at index leaf up to appropriate position
-	{
+	/**
+	 * @param leaf posicion del valor que tal vez este fuera de lugar
+	 * Este metodo empuja el valor ingresado hacia la raiz hasta que encuentre su posicion
+	 * apropiada.
+	 */
+	protected void percolateUp(int leaf){
 		int parent = parent(leaf);
 		E value = data.get(leaf);
 		while (leaf > 0 &&
@@ -63,19 +71,21 @@ public class VectorHeap<E extends Comparable<E>> implements PriorityQueue<E>
 		data.set(leaf,value);
 	}
 
-	public void add(E value)
-	// pre: value is non-null comparable
-	// post: value is added to priority queue
-	{
+	/* (non-Javadoc)
+	 * @see PriorityQueue#add(java.lang.Comparable)
+	 * Manda la posicion del valor agregado al metodo percolateUp
+	 */
+	public void add(E value){
 		data.add(value);
 		percolateUp(data.size()-1);
 	}
 
-	protected void pushDownRoot(int root)
-	// pre: 0 <= root < size
-	// post: moves node at index root down
-	// to appropriate position in subtree
-	{
+	/**
+	 * @param root la posicion de la raiz del arbol
+	 * Mueve el nodo hacia la raiz para luego poner para luego
+	 * vaya a su posicion correcta en el heap.
+	 */
+	protected void pushDownRoot(int root){
 		int heapSize = data.size();
 		E value = data.get(root);
 		while (root < heapSize) {
@@ -93,8 +103,8 @@ public class VectorHeap<E extends Comparable<E>> implements PriorityQueue<E>
 						(value) < 0)
 				{
 					data.set(root,data.get(childpos));
-					root = childpos; // keep moving down
-				} else { // found right location
+					root = childpos; // Sigue abajo
+				} else { // Encuentra posicion a la derecha
 					data.set(root,value);
 					return;
 				}
@@ -105,38 +115,58 @@ public class VectorHeap<E extends Comparable<E>> implements PriorityQueue<E>
 		}
 	}
 
-	public E remove()
-	// pre: !isEmpty()
-	// post: returns and removes minimum value from queue
-	{
-		E minVal = getFirst();
-		data.set(0,data.get(data.size()-1));
-		data.setSize(data.size()-1);
-		if (data.size() > 1) pushDownRoot(0);
-		return minVal;
+	/* (non-Javadoc)
+	 * @see PriorityQueue#remove()
+	 *  
+	 */
+	public E remove(){
+		//Pre si la cola no esta vacia
+		if (isEmpty()==false){
+			E minVal = getFirst();
+			data.set(0,data.get(data.size()-1));
+			data.setSize(data.size()-1);
+			if (data.size() > 1) pushDownRoot(0);
+			return minVal;
+		}
+		else{
+			return null;
+		}
+	
 	}
 
+	/* (non-Javadoc)
+	 * @see PriorityQueue#getFirst()
+	 */
 	@Override
 	public E getFirst() {
-		// TODO Auto-generated method stub
-		return null;
+		return data.get(0);
 	}
 
+	/* (non-Javadoc)
+	 * @see PriorityQueue#isEmpty()
+	 */
 	@Override
 	public boolean isEmpty() {
-		// TODO Auto-generated method stub
-		return false;
+		return data.isEmpty();
 	}
 
+	/* (non-Javadoc)
+	 * @see PriorityQueue#size()
+	 */
 	@Override
 	public int size() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
+	/* (non-Javadoc)
+	 * @see PriorityQueue#clear()
+	 */
 	@Override
 	public void clear() {
-		// TODO Auto-generated method stub
-
+		int i=0;
+		while(data.isEmpty()==false){
+			data.remove(i);
+			i++;
+		}
 	}
 }
