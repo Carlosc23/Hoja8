@@ -3,6 +3,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import java.awt.Font;
@@ -14,10 +15,12 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.event.ActionListener;
 import java.util.Vector;
 import java.awt.event.ActionEvent;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
 
 /**
  * @author Carlos Calderon ,15219
- * @author 
+ * @author Rafael Leon,
  * @version 2.0 , 1 de octubre de 2016
  * Clase GUIHospital. Se encarga de dar la interfaz grafica, para desplegar a los pacientes.
  */
@@ -31,10 +34,10 @@ public class GUIHospital extends JFrame {
 	private JTextArea textArea;
 	private GroupLayout gl_contentPane;
 	private JScrollPane scrollPane;
-
+	  public static final String[] opciones = { "VectorHeap", "JFC" };
 	/**
 	 * Launch the application.
-	 * @param args
+	 * @param args argumentos de la linea de comandos
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -104,7 +107,7 @@ public class GUIHospital extends JFrame {
 		 					.addGap(73)
 		 					.addComponent(lblNewLabel_1)
 		 					.addPreferredGap(ComponentPlacement.UNRELATED)
-		 					.addComponent(textField, GroupLayout.DEFAULT_SIZE, 486, Short.MAX_VALUE))
+		 					.addComponent(textField, GroupLayout.DEFAULT_SIZE, 423, Short.MAX_VALUE))
 		 				.addGroup(gl_contentPane.createSequentialGroup()
 		 					.addGap(45)
 		 					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 515, GroupLayout.PREFERRED_SIZE)
@@ -157,13 +160,39 @@ public class GUIHospital extends JFrame {
 				if (e.getSource() == btnDesplegar) {
 					String contenido=manejadora.leerContenido(textField.getText());
 					if (contenido!=null){
-						textArea.append("--Pacientes en orden de registro-- \n");
-						textArea.append(contenido);
-						manejadora.asignacion(textField.getText());
-						textArea.append("--Pacientes en orden de prioridad que deben ser atendidos-- \n");
-						//C:\Users\Carlos\Desktop\nombres.txt"
-						textArea.append(manejadora.desplegar());
-						textField.setEditable(false);
+						JFrame frame = new JFrame("Input ");
+						 String imp = (String) JOptionPane.showInputDialog(frame, 
+							        "Escoga la implementacion que desea utilizar",
+							        "Implementacion",
+							        JOptionPane.QUESTION_MESSAGE, 
+							        null, 
+							        opciones, 
+							        opciones[0]);
+							    // favoritePizza will be null if the user clicks Cancel
+							    //System.out.printf("Favorite pizza is %s.\n", imp);
+							    if (imp!=null){
+							    	if (imp.equals("VectorHeap")){
+								    	textArea.append("--Pacientes en orden de registro-- \n");
+										textArea.append(contenido);
+										manejadora.asignacion(textField.getText());
+										textArea.append("--Pacientes en orden de prioridad que deben ser atendidos-- \n");
+										//C:\Users\Carlos\Desktop\nombres.txt"
+										textArea.append(manejadora.desplegar());
+										textField.setEditable(false);
+								    }
+								    else if (imp.equals("JFC")){
+								    	textArea.append("--Pacientes en orden de registro-- \n");
+								    	textArea.append(contenido);
+								    	manejadora.asignacion2(textField.getText());
+								    	textArea.append("--Pacientes en orden de prioridad que deben ser atendidos-- \n");
+										//C:\Users\Carlos\Desktop\nombres.txt"
+										textArea.append(manejadora.desplegar2());
+										textField.setEditable(false);
+								    }
+							    }
+							    else{
+							    	
+							    }
 					}
 					
 				}

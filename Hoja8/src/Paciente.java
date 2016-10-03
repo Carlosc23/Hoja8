@@ -1,7 +1,7 @@
 
 /**
  * @author Carlos Calderon
- * @version 2.0 , 1 de octubre de 2016
+ * @version 2.0 , 1 de octubre de 2016.
  * Clase Paciente. Implementa la interfaz comparable. Simula un paciente para el registro de 
  * emergencias.
  *
