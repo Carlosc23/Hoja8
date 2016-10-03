@@ -8,7 +8,7 @@ import javax.swing.JOptionPane;
 
 /**
  * @author Carlos Calderon, 15219
- * @author Rafael Leon,
+ * @author Rafael Leon, 13361
  * @version 2.0
  * Clase Manejadora. Se encarga de los procesos que debe llevar a cabo el 
  * registro para funcionar.
