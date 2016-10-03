@@ -6,4 +6,4 @@ Por favor cualquier curiosidad no copiar, consultar al autor.
 Carlos Calderón carné: 15219, Rafael León carné:
 
 # UML
-![Alt text](UML8.jpg "UML")
+![Alt text](UML8b.jpg "UML")
