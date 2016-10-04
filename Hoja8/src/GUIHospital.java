@@ -60,7 +60,7 @@ public class GUIHospital extends JFrame {
 	}
 
 	/**
-	 * Crear el frame
+	 *  Crear el frame
 	 */
 	private void initialize(){
 		//Inicializar panel
