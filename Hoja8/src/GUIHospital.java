@@ -20,8 +20,8 @@ import javax.swing.DefaultComboBoxModel;
 
 /**
  * @author Carlos Calderon ,15219
- * @author Rafael Leon,
- * @version 2.0 , 1 de octubre de 2016
+ * @author Rafael Leon, 13361
+ * @version 3.0 , 1 de octubre de 2016
  * Clase GUIHospital. Se encarga de dar la interfaz grafica, para desplegar a los pacientes.
  */
 public class GUIHospital extends JFrame {

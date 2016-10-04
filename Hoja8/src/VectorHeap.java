@@ -1,7 +1,7 @@
 import java.util.Vector;
 /**
  * @author UVG
- * @version 2.0, 1 de octubre de 2016
+ * @version 3.0, 1 de octubre de 2016
  * @param <E> Para indicar el tipo de objeto que almacenara la cola.
  */
 public class VectorHeap<E extends Comparable<E>> implements PriorityQueue<E>

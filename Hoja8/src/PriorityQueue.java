@@ -1,6 +1,6 @@
 /**
  * @author UVG
- * @version 2.0 , 1 de octubre de 2016
+ * @version 3.0 , 1 de octubre de 2016
  * @param <E> Para indicar de que tipo sera la cola de prioridad.
  */
 public interface PriorityQueue<E extends Comparable<E>>
